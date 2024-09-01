@@ -10,13 +10,13 @@ It is based on the official Brave Documentation for installation.
 * Give execution permissions to the script
 
 ```bash
- chmod u+x brave-install.sh
+ chmod u+x brave-installer.sh
 ```
 
 * Run the script with sudo privileges
 
 ```bash
- sudo ./brave-install.sh
+ sudo ./brave-installer.sh
 ```
 
 ### References
