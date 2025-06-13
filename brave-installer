@@ -73,7 +73,7 @@ install_rpm(){
 
   echo -en "${GRN}[*]${END} synchronizing repositories.... "
   dnf makecache &>/dev/null
-  exit_code "$code" "an error occurred while synchronizing the repositories"
+  exit_code "$?" "an error occurred while synchronizing the repositories"
 
   install_packages 'dnf' "$dependencies"
 
@@ -84,7 +84,7 @@ install_rpm(){
 
   echo -en "${GRN}[*]${END} synchronizing repositories.... "
   dnf makecache &>/dev/null
-  exit_code "$code" "an error occurred while synchronizing the repositories"
+  exit_code "$?" "an error occurred while synchronizing the repositories"
 
   install_packages 'dnf' "brave-browser"
 
