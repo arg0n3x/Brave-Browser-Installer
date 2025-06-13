@@ -6,7 +6,6 @@ BLU="\e[01;34m"; END="\e[00m"
 
 # status indicators
 PROC="${BLU}[*]${END}"
-OK="${GRN}[+]${END}"
 
 # receives an error message as a argument, displays it to stdout, and exits with exit code 1
 errorMessage(){
