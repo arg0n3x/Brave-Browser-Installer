@@ -51,15 +51,12 @@ install_deb(){
 
   # Add key GPG
   echo -en "${PROC} adding key GPG.... "
-  
   curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg &>/dev/null
-  
   exit_code "$?" "failed to add GPG key"
 
   # Add the repository
   echo -en "${PROC} adding repository.... "
   echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list &>/dev/null
-
   exit_code "$?" "could not add repository"
 
   install_packages 'apt' 'brave-browser'
