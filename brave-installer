@@ -52,7 +52,7 @@ install_deb(){
   # Add key GPG
   echo -en "${PROC} adding key GPG.... "
   
-  curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+  curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg &>/dev/null
   
   exit_code "$?" "failed to add GPG key"
 
