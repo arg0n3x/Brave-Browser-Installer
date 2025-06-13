@@ -71,18 +71,18 @@ install_deb(){
 install_rpm(){
   local dependencies='dnf-plugins-core'
 
-  echo -en "${GRN}[*]${END} synchronizing repositories.... "
+  echo -en "${PROC} synchronizing repositories.... "
   dnf makecache &>/dev/null
   exit_code "$?" "an error occurred while synchronizing the repositories"
 
   install_packages 'dnf' "$dependencies"
 
   # Add the repository
-  echo -en "${BLUE}[*]${END} adding repository.... "
+  echo -en "${PROC} adding repository.... "
   dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo &>/dev/null
   exit_code "$?" "could not add repository"
 
-  echo -en "${GRN}[*]${END} synchronizing repositories.... "
+  echo -en "${PROC} synchronizing repositories.... "
   dnf makecache &>/dev/null
   exit_code "$?" "an error occurred while synchronizing the repositories"
 
