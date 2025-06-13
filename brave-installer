@@ -8,8 +8,6 @@ BLU="\e[01;34m"; END="\e[00m"
 PROC="${BLU}[*]${END}"
 OK="${GRN}[+]${END}"
 
-
-
 # receives an error message as a argument, displays it to stdout, and exits with exit code 1
 errorMessage(){
   local message="$1"
@@ -103,7 +101,7 @@ if [[ $(id -u) -ne 0 ]]; then
 fi
 
 # Before proceeding, check that brave browser is not installed, otherwise exit
-if [[ -n "$(which brave-browser)" ]]; then
+if [[ -n "$(which brave-browser 2>/dev/null)" ]]; then
   echo -e "\nThe ${GRN}brave-browser${END} is already installed\n"
   exit 0
 fi
@@ -123,4 +121,3 @@ elif [[ $rpm_dist =~ ${get_dist,,} ]]; then
 else
   errorMessage "distribution $get_dist is not supported"
 fi
-
