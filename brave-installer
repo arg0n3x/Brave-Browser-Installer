@@ -39,13 +39,25 @@ install_packages(){
   done
 }
 
+sync_repos(){
+  local packages_manager="$1"
+
+  echo -en "${PROC} synchronizing repositories.... "
+  if [[ "$packages_manager" == 'apt' ]]; then
+    apt update &>/dev/null
+    code=$?
+  elif [[ "$packages_manager" == 'dnf' ]]; then
+    dnf makecache &>/dev/null
+    code=$?
+  fi
+
+  exit_code "$code" "an error occurred while synchronizing the repositories"
+}
+
 install_deb(){
   local dependencies='curl apt-transport-https'
 
-  echo -en "${PROC} synchronizing repositories.... "
-  apt update &>/dev/null
-  exit_code "$?" "an error occurred while synchronizing the repositories"
-  
+  sync_repos "apt"
   install_packages 'apt' "$dependencies"
 
   # Add key GPG
@@ -58,11 +70,8 @@ install_deb(){
   echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list &>/dev/null
   exit_code "$?" "could not add repository"
 
+  sync_repos "apt"
   install_packages 'apt' 'brave-browser'
-
-  echo -en "${PROC} synchronizing repositories.... "
-  apt update &>/dev/null
-  exit_code "$?" "an error occurred while synchronizing the repositories"
 
   echo -e "\n${GRN}brave-browser${END} has been installed\n"
 }
@@ -70,10 +79,7 @@ install_deb(){
 install_rpm(){
   local dependencies='dnf-plugins-core'
 
-  echo -en "${PROC} synchronizing repositories.... "
-  dnf makecache &>/dev/null
-  exit_code "$?" "an error occurred while synchronizing the repositories"
-
+  sync_repos "dnf"
   install_packages 'dnf' "$dependencies"
 
   # Add the repository
@@ -81,10 +87,7 @@ install_rpm(){
   dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo &>/dev/null
   exit_code "$?" "could not add repository"
 
-  echo -en "${PROC} synchronizing repositories.... "
-  dnf makecache &>/dev/null
-  exit_code "$?" "an error occurred while synchronizing the repositories"
-
+  sync_repos "dnf"
   install_packages 'dnf' "brave-browser"
 
   echo -e "\n${GRN}brave-browser${END} has been installed\n"
